@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正在加载...</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Microsoft YaHei",
+        Arial,
+        sans-serif;
+
+    background: #ffffff;
+    color: #111;
+    overflow: hidden;
+}
+
+/* =========================
+   主页面
+========================= */
+
+.page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-container {
+    width: 540px;
+    max-width: calc(100% - 50px);
+
+    text-align: center;
+
+    transform: translateY(-60px);
+}
+
+
+/* =========================
+   顶部旋转加载图标
+========================= */
+
+.spinner {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 35px;
+
+    border: 7px solid transparent;
+
+    border-top-color: #2f7fc4;
+    border-right-color: #2f7fc4;
+    border-bottom-color: #2f7fc4;
+
+    border-radius: 50%;
+
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================
+   标题
+========================= */
+
+.title {
+    font-size: 38px;
+    font-weight: 400;
+
+    margin-bottom: 55px;
+}
+
+
+/* =========================
+   倒计时
+========================= */
+
+.countdown {
+    font-size: 25px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   进度条
+========================= */
+
+.progress-track {
+
+    position: relative;
+
+    width: 100%;
+    height: 18px;
+
+    background: #d8d8d8;
+
+    border-radius: 20px;
+
+    box-shadow:
+        inset 0 1px 3px rgba(0,0,0,.12);
+}
+
+
+/* 蓝色进度 */
+
+.progress-bar {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 0%;
+    height: 100%;
+
+    background: #0878db;
+
+    border-radius: 20px;
+
+    transition: width .1s linear;
+}
+
+
+/* 蓝色圆点 */
+
+.progress-dot {
+
+    position: absolute;
+
+    left: 0%;
+    top: 50%;
+
+    width: 37px;
+    height: 37px;
+
+    background: #0878db;
+
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+
+    box-shadow:
+        0 3px 9px rgba(0,80,170,.30);
+
+    transition: left .1s linear;
+}
+
+
+/* =========================
+   百分比
+========================= */
+
+.status {
+
+    margin-top: 28px;
+
+    font-size: 25px;
+
+    color: #075da5;
+}
+
+
+/* =========================
+   网络错误遮罩
+========================= */
+
+.error-overlay {
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,.20);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+}
+
+
+/* =========================
+   错误窗口
+========================= */
+
+.error-box {
+
+    width: 320px;
+
+    background: #2c2c2c;
+
+    border-radius: 18px;
+
+    padding: 27px 22px 20px;
+
+    color: #fff;
+
+    text-align: center;
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.30);
+}
+
+
+.error-title {
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    margin-bottom: 12px;
+}
+
+
+.error-text {
+
+    font-size: 16px;
+
+    color: #eeeeee;
+
+    margin-bottom: 22px;
+}
+
+
+/* 确定按钮 */
+
+.confirm-btn {
+
+    width: 100%;
+    height: 46px;
+
+    border-radius: 11px;
+
+    border: 1px solid #ffffff;
+
+    background: #087ee5;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 0 0 2px #222;
+}
+
+
+.confirm-btn:hover {
+
+    background: #1490ff;
+
+}
+
+
+.confirm-btn:active {
+
+    transform: scale(.99);
+
+}
+
+
+/* =========================
+   手机适配
+========================= */
+
+@media (max-width: 600px) {
+
+    .loading-container {
+
+        width: 84%;
+
+        transform: translateY(-40px);
+
+    }
+
+    .spinner {
+
+        width: 42px;
+        height: 42px;
+
+        border-width: 6px;
+
+        margin-bottom: 30px;
+
+    }
+
+    .title {
+
+        font-size: 30px;
+
+        margin-bottom: 48px;
+
+    }
+
+    .countdown {
+
+        font-size: 20px;
+
+    }
+
+    .status {
+
+        font-size: 20px;
+
+    }
+
+    .progress-dot {
+
+        width: 32px;
+        height: 32px;
+
+    }
+
+    .error-box {
+
+        width: 82%;
+
+        max-width: 320px;
+
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     加载页面
+========================= -->
+
+<div class="page">
+
+    <div class="loading-container">
+
+        <!-- 转圈 -->
+
+        <div class="spinner"></div>
+
+
+        <!-- 标题 -->
+
+        <div class="title">
+
+            请勿关闭
+
+        </div>
+
+
+        <!-- 倒计时 -->
+
+        <div class="countdown">
+
+            <span id="seconds">30</span>秒后自动跳转
+
+        </div>
+
+
+        <!-- 进度条 -->
+
+        <div class="progress-track">
+
+            <div
+                class="progress-bar"
+                id="progressBar">
+            </div>
+
+            <div
+                class="progress-dot"
+                id="progressDot">
+            </div>
+
+        </div>
+
+
+        <!-- 百分比 -->
+
+        <div class="status">
+
+            <span id="percent">0</span>%
+            正在加载中
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     网络异常弹窗
+========================= -->
+
+<div
+    class="error-overlay"
+    id="errorOverlay">
+
+    <div class="error-box">
+
+        <div class="error-title">
+
+            网络加载异常
+
+        </div>
+
+        <div class="error-text">
+
+            请检查网络连接后重试。
+
+        </div>
+
+        <button
+            class="confirm-btn"
+            id="confirmBtn">
+
+            确定
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* ==================================================
+   配置区域
+================================================== */
+
+
+/*
+修改成你的跳转地址
+
+必须带：
+
+https://
+或者
+http://
+*/
+
+const TARGET_URL =
+    "https://example.com/";
+
+
+/*
+加载时间
+
+30 = 30秒
+10 = 10秒
+5  = 5秒
+*/
+
+const TOTAL_SECONDS = 30;
+
+
+
+/* ==================================================
+   获取页面元素
+================================================== */
+
+const secondsEl =
+    document.getElementById("seconds");
+
+const percentEl =
+    document.getElementById("percent");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const progressDot =
+    document.getElementById("progressDot");
+
+const errorOverlay =
+    document.getElementById("errorOverlay");
+
+const confirmBtn =
+    document.getElementById("confirmBtn");
+
+
+
+/* ==================================================
+   时间设置
+================================================== */
+
+const totalTime =
+    TOTAL_SECONDS * 1000;
+
+let startTime =
+    Date.now();
+
+let finished =
+    false;
+
+
+
+/* ==================================================
+   更新加载进度
+================================================== */
+
+function updateProgress() {
+
+    if (finished) {
+        return;
+    }
+
+
+    const currentTime =
+        Date.now();
+
+
+    const elapsed =
+        currentTime - startTime;
+
+
+    /* 计算百分比 */
+
+    let progress =
+        (elapsed / totalTime) * 100;
+
+
+    if (progress > 100) {
+
+        progress = 100;
+
+    }
+
+
+    /* 整数百分比 */
+
+    const percent =
+        Math.floor(progress);
+
+
+    /* 剩余时间 */
+
+    const remainingSeconds =
+        Math.max(
+
+            0,
+
+            Math.ceil(
+
+                (totalTime - elapsed) / 1000
+
+            )
+
+        );
+
+
+    /* 更新文字 */
+
+    secondsEl.textContent =
+        remainingSeconds;
+
+    percentEl.textContent =
+        percent;
+
+
+    /* 更新进度条 */
+
+    progressBar.style.width =
+        progress + "%";
+
+    progressDot.style.left =
+        progress + "%";
+
+
+
+    /* ==================================================
+       加载完成
+    ================================================== */
+
+    if (progress >= 100) {
+
+        finished = true;
+
+
+        secondsEl.textContent =
+            "0";
+
+        percentEl.textContent =
+            "100";
+
+        progressBar.style.width =
+            "100%";
+
+        progressDot.style.left =
+            "100%";
+
+
+        /* 延迟一点跳转 */
+
+        setTimeout(function () {
+
+            tryRedirect();
+
+        }, 500);
+
+
+        return;
+
+    }
+
+
+    requestAnimationFrame(
+        updateProgress
+    );
+
+}
+
+
+
+/* ==================================================
+   跳转
+================================================== */
+
+function tryRedirect() {
+
+
+    /*
+    浏览器明确处于离线状态
+    */
+
+    if (!navigator.onLine) {
+
+        showError();
+
+        return;
+
+    }
+
+
+    /*
+    地址检查
+    */
+
+    if (
+        !TARGET_URL ||
+        TARGET_URL === "https://example.com/"
+    ) {
+
+        showError();
+
+        return;
+
+    }
+
+
+    /*
+    正式跳转
+    */
+
+    window.location.replace(
+        TARGET_URL
+    );
+
+}
+
+
+
+/* ==================================================
+   显示错误窗口
+================================================== */
+
+function showError() {
+
+    errorOverlay.style.display =
+        "flex";
+
+}
+
+
+
+/* ==================================================
+   隐藏错误窗口
+================================================== */
+
+function hideError() {
+
+    errorOverlay.style.display =
+        "none";
+
+}
+
+
+
+/* ==================================================
+   点击确定
+================================================== */
+
+confirmBtn.addEventListener(
+    "click",
+    function () {
+
+        hideError();
+
+
+        /*
+        有网络则重新尝试跳转
+        */
+
+        if (navigator.onLine) {
+
+            tryRedirect();
+
+        }
+
+        else {
+
+            /*
+            仍然没网络
+            1秒后再次显示错误
+            */
+
+            setTimeout(
+                showError,
+                500
+            );
+
+        }
+
+    }
+);
+
+
+
+/* ==================================================
+   网络恢复时
+================================================== */
+
+window.addEventListener(
+    "online",
+    function () {
+
+        /*
+        如果已经加载到100%
+        网络恢复后重新尝试
+        */
+
+        if (finished) {
+
+            hideError();
+
+            setTimeout(
+                tryRedirect,
+                500
+            );
+
+        }
+
+    }
+);
+
+
+
+/* ==================================================
+   网络断开
+================================================== */
+
+window.addEventListener(
+    "offline",
+    function () {
+
+        /*
+        加载完成以后断网
+        才显示错误
+        */
+
+        if (finished) {
+
+            showError();
+
+        }
+
+    }
+);
+
+
+
+/* ==================================================
+   开始运行
+================================================== */
+
+updateProgress();
+
+</script>
+
+
+</body>
+</html>
